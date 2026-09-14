@@ -1,0 +1,44 @@
+{
+  "features": {
+    "numeric": [
+      "temp",
+      "rain_1h",
+      "snow_1h",
+      "clouds_all",
+      "year",
+      "month",
+      "day_of_week",
+      "hour",
+      "is_weekend",
+      "is_holiday",
+      "hour_sin",
+      "hour_cos",
+      "dow_sin",
+      "dow_cos",
+      "month_sin",
+      "month_cos"
+    ],
+    "categorical": [
+      "weather_main"
+    ],
+    "all": [
+      "temp",
+      "rain_1h",
+      "snow_1h",
+      "clouds_all",
+      "weather_main",
+      "year",
+      "month",
+      "day_of_week",
+      "hour",
+      "is_weekend",
+      "is_holiday",
+      "hour_sin",
+      "hour_cos",
+      "dow_sin",
+      "dow_cos",
+      "month_sin",
+      "month_cos"
+    ]
+  }
+}

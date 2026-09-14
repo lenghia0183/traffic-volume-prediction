@@ -1,0 +1,15 @@
+{
+  "weather_main": [
+    "Clear",
+    "Clouds",
+    "Drizzle",
+    "Fog",
+    "Haze",
+    "Mist",
+    "Rain",
+    "Smoke",
+    "Snow",
+    "Squall",
+    "Thunderstorm"
+  ]
+}

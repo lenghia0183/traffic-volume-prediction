@@ -1,0 +1,39 @@
+{
+  "search_space": {
+    "model__n_estimators": [
+      120,
+      200,
+      300
+    ],
+    "model__max_depth": [
+      16,
+      24,
+      null
+    ],
+    "model__min_samples_split": [
+      2,
+      5,
+      10
+    ],
+    "model__min_samples_leaf": [
+      1,
+      2,
+      4
+    ],
+    "model__max_features": [
+      0.7,
+      1.0,
+      "sqrt"
+    ]
+  },
+  "best_parameters": {
+    "n_estimators": 200,
+    "min_samples_split": 10,
+    "min_samples_leaf": 2,
+    "max_features": "sqrt",
+    "max_depth": null
+  },
+  "best_cv_mae": 280.3670510370624,
+  "cv": "TimeSeriesSplit(n_splits=3)",
+  "candidates": 10
+}

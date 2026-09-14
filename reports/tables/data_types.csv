@@ -1,0 +1,10 @@
+column,dtype
+holiday,str
+temp,float64
+rain_1h,float64
+snow_1h,float64
+clouds_all,int64
+weather_main,str
+weather_description,str
+date_time,datetime64[us]
+traffic_volume,int64

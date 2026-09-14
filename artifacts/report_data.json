@@ -1,0 +1,367 @@
+{
+  "dataset": {
+    "raw_rows": 48204,
+    "columns": 9,
+    "column_names": [
+      "holiday",
+      "temp",
+      "rain_1h",
+      "snow_1h",
+      "clouds_all",
+      "weather_main",
+      "weather_description",
+      "date_time",
+      "traffic_volume"
+    ],
+    "date_start": "2012-10-02T09:00:00",
+    "date_end": "2018-09-30T23:00:00",
+    "missing": {
+      "holiday": 48143,
+      "temp": 0,
+      "rain_1h": 0,
+      "snow_1h": 0,
+      "clouds_all": 0,
+      "weather_main": 0,
+      "weather_description": 0,
+      "date_time": 0,
+      "traffic_volume": 0
+    },
+    "exact_duplicates": 17,
+    "unique_timestamps": 40575,
+    "duplicate_timestamp_groups": 5445,
+    "duplicate_timestamp_extra_rows": 7629,
+    "inconsistent_traffic_timestamp_groups": 0,
+    "time_gaps_over_1h": 2588,
+    "max_gap_hours": 7387.0,
+    "temp_min": 0.0,
+    "temp_max": 310.07,
+    "temp_mean": 281.2058703012198,
+    "temp_median": 282.45,
+    "temp_below_200": 10,
+    "temp_equal_zero": 10,
+    "holiday_values": [
+      "Christmas Day",
+      "Columbus Day",
+      "Independence Day",
+      "Labor Day",
+      "Martin Luther King Jr Day",
+      "Memorial Day",
+      "New Years Day",
+      "State Fair",
+      "Thanksgiving Day",
+      "Veterans Day",
+      "Washingtons Birthday"
+    ],
+    "source_file": "D:\\phan_tich_du_lieu\\traffic-volume-prediction\\data\\raw\\Metro_Interstate_Traffic_Volume.csv",
+    "processed_rows": 40575
+  },
+  "quality": {
+    "rows_after_exact_dedup": 48187,
+    "rows_after_timestamp_aggregation": 40575,
+    "inconsistent_groups_seen": 0,
+    "zero_temp_replaced": 10
+  },
+  "split": {
+    "train_rows": 32460,
+    "test_rows": 8115,
+    "train_start": "2012-10-02 09:00:00",
+    "train_end": "2017-10-26 17:00:00",
+    "test_start": "2017-10-26 18:00:00",
+    "test_end": "2018-09-30 23:00:00"
+  },
+  "features": {
+    "numeric": [
+      "temp",
+      "rain_1h",
+      "snow_1h",
+      "clouds_all",
+      "year",
+      "month",
+      "day_of_week",
+      "hour",
+      "is_weekend",
+      "is_holiday",
+      "hour_sin",
+      "hour_cos",
+      "dow_sin",
+      "dow_cos",
+      "month_sin",
+      "month_cos"
+    ],
+    "categorical": [
+      "weather_main"
+    ],
+    "all": [
+      "temp",
+      "rain_1h",
+      "snow_1h",
+      "clouds_all",
+      "weather_main",
+      "year",
+      "month",
+      "day_of_week",
+      "hour",
+      "is_weekend",
+      "is_holiday",
+      "hour_sin",
+      "hour_cos",
+      "dow_sin",
+      "dow_cos",
+      "month_sin",
+      "month_cos"
+    ]
+  },
+  "models": {
+    "comparison": [
+      {
+        "model": "Dummy",
+        "train_mae": 1744.6886240195527,
+        "test_mae": 1723.976898534582,
+        "train_rmse": 1988.3744232208273,
+        "test_rmse": 1970.206195090623,
+        "train_r2": 0.0,
+        "test_r2": -0.00014398968995377182
+      },
+      {
+        "model": "Linear Regression",
+        "train_mae": 807.9901437647567,
+        "test_mae": 804.9952510091267,
+        "train_rmse": 1035.3869286348133,
+        "test_rmse": 1019.9756027487788,
+        "train_r2": 0.7288503678779101,
+        "test_r2": 0.7319481947728317
+      },
+      {
+        "model": "Decision Tree",
+        "train_mae": 144.7050936606723,
+        "test_mae": 292.58929743142335,
+        "train_rmse": 248.98169908250247,
+        "test_rmse": 488.3815271407222,
+        "train_r2": 0.9843202722968263,
+        "test_r2": 0.9385449429930381
+      },
+      {
+        "model": "Random Forest Default",
+        "train_mae": 80.98823143227563,
+        "test_mae": 249.3036338185459,
+        "train_rmse": 137.32321514252183,
+        "test_rmse": 414.4787886432853,
+        "train_r2": 0.9952302942262896,
+        "test_r2": 0.9557367000340247
+      },
+      {
+        "model": "Random Forest Tuned",
+        "train_mae": 181.42043925148042,
+        "test_mae": 241.86982925896967,
+        "train_rmse": 300.21424342171366,
+        "test_rmse": 405.8596011387722,
+        "train_r2": 0.9772036009809274,
+        "test_r2": 0.9575584909544992
+      }
+    ]
+  },
+  "tuning": {
+    "search_space": {
+      "model__n_estimators": [
+        120,
+        200,
+        300
+      ],
+      "model__max_depth": [
+        16,
+        24,
+        null
+      ],
+      "model__min_samples_split": [
+        2,
+        5,
+        10
+      ],
+      "model__min_samples_leaf": [
+        1,
+        2,
+        4
+      ],
+      "model__max_features": [
+        0.7,
+        1.0,
+        "sqrt"
+      ]
+    },
+    "best_parameters": {
+      "n_estimators": 200,
+      "min_samples_split": 10,
+      "min_samples_leaf": 2,
+      "max_features": "sqrt",
+      "max_depth": null
+    },
+    "best_cv_mae": 280.3670510370624,
+    "cv": "TimeSeriesSplit(n_splits=3)",
+    "candidates": 10
+  },
+  "final_model": {
+    "train": {
+      "mae": 181.42043925148042,
+      "rmse": 300.21424342171366,
+      "r2": 0.9772036009809274
+    },
+    "test": {
+      "mae": 241.86982925896967,
+      "rmse": 405.8596011387722,
+      "r2": 0.9575584909544992
+    },
+    "model_path": "artifacts/traffic_rf_pipeline.joblib",
+    "reload_prediction": 4716.476757922222
+  },
+  "feature_importance": [
+    {
+      "feature": "num__hour_cos",
+      "importance": 0.4654114817951557
+    },
+    {
+      "feature": "num__hour",
+      "importance": 0.3097952716608192
+    },
+    {
+      "feature": "num__hour_sin",
+      "importance": 0.08931299221401992
+    },
+    {
+      "feature": "num__dow_sin",
+      "importance": 0.029155160987807124
+    },
+    {
+      "feature": "num__day_of_week",
+      "importance": 0.026988636725773858
+    },
+    {
+      "feature": "num__is_weekend",
+      "importance": 0.020951912591432025
+    },
+    {
+      "feature": "num__temp",
+      "importance": 0.01658332649905429
+    },
+    {
+      "feature": "num__is_holiday",
+      "importance": 0.009580312438499772
+    },
+    {
+      "feature": "num__dow_cos",
+      "importance": 0.006174254270169449
+    },
+    {
+      "feature": "num__clouds_all",
+      "importance": 0.0045571386758177035
+    }
+  ],
+  "permutation_importance": [
+    {
+      "feature": "hour_cos",
+      "importance": 991.5639514023015,
+      "std": 8.384192458794047
+    },
+    {
+      "feature": "hour",
+      "importance": 550.3728963276629,
+      "std": 5.344273478274333
+    },
+    {
+      "feature": "hour_sin",
+      "importance": 303.5868340256316,
+      "std": 1.0453947063665676
+    },
+    {
+      "feature": "day_of_week",
+      "importance": 116.40867862255584,
+      "std": 4.583248171828301
+    },
+    {
+      "feature": "dow_sin",
+      "importance": 109.85285244772342,
+      "std": 3.8908002660001673
+    },
+    {
+      "feature": "is_weekend",
+      "importance": 81.27263167697517,
+      "std": 3.6710769606636435
+    },
+    {
+      "feature": "dow_cos",
+      "importance": 30.884109774769183,
+      "std": 2.750441508990024
+    },
+    {
+      "feature": "is_holiday",
+      "importance": 23.974163514602697,
+      "std": 2.31635398096146
+    },
+    {
+      "feature": "temp",
+      "importance": 19.641142685194087,
+      "std": 1.511092501955943
+    },
+    {
+      "feature": "month_cos",
+      "importance": 6.431666084858411,
+      "std": 0.7561170979525643
+    }
+  ],
+  "error_analysis": {
+    "mean_residual": -19.632230288851098,
+    "median_absolute_error": 145.92021326982558,
+    "worst_mae_hour": 16,
+    "worst_mae_hour_value": 404.8523703157582,
+    "worst_mae_weather": "Fog",
+    "worst_mae_weather_value": 580.0624812333053
+  },
+  "eda": {
+    "mean_traffic": 3290.650474430068,
+    "median_traffic": 3427.0,
+    "peak_mean_hour": 16,
+    "peak_mean_hour_value": 5708.6145284124195,
+    "lowest_mean_hour": 3,
+    "highest_mean_weather": "Smoke"
+  },
+  "environment": {
+    "python": "3.13.6",
+    "pandas": "3.0.5",
+    "scikit_learn": "1.9.1",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "figures": [
+    "reports\\figures\\01_traffic_distribution.png",
+    "reports\\figures\\02_hourly_pattern.png",
+    "reports\\figures\\03_weekday_pattern.png",
+    "reports\\figures\\04_monthly_pattern.png",
+    "reports\\figures\\05_weather_pattern.png",
+    "reports\\figures\\06_temp_vs_traffic.png",
+    "reports\\figures\\07_hour_week_heatmap.png",
+    "reports\\figures\\08_time_trend.png",
+    "reports\\figures\\09_actual_vs_predicted.png",
+    "reports\\figures\\10_residual_distribution.png",
+    "reports\\figures\\11_prediction_timeseries.png",
+    "reports\\figures\\12_mae_by_hour.png",
+    "reports\\figures\\13_mae_by_weather.png",
+    "reports\\figures\\14_permutation_importance.png",
+    "reports\\figures\\15_rf_feature_importance.png"
+  ],
+  "tables": [
+    "reports\\tables\\category_summary.csv",
+    "reports\\tables\\data_profile.csv",
+    "reports\\tables\\data_types.csv",
+    "reports\\tables\\dataset_head.csv",
+    "reports\\tables\\duplicate_analysis.csv",
+    "reports\\tables\\eda_findings.json",
+    "reports\\tables\\mae_by_hour.csv",
+    "reports\\tables\\mae_by_weather.csv",
+    "reports\\tables\\missing_values.csv",
+    "reports\\tables\\model_comparison.csv",
+    "reports\\tables\\permutation_importance.csv",
+    "reports\\tables\\random_forest_feature_importance.csv",
+    "reports\\tables\\test_predictions.csv",
+    "reports\\tables\\time_gaps.csv",
+    "reports\\tables\\timestamp_duplicates.csv",
+    "reports\\tables\\traffic_by_weather.csv"
+  ]
+}

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dự đoán lưu lượng I-94</title>
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">I-94</span><span>Hệ thống dự báo lưu lượng giao thông</span></div>
+      <span class="model-name">Random Forest Regression</span>
+    </header>
+
+    <section class="hero">
+      <div>
+        <span class="eyebrow">METRO INTERSTATE TRAFFIC VOLUME</span>
+        <h1>Dự đoán lưu lượng giao thông I-94</h1>
+        <p>Ước lượng số phương tiện hướng tây mỗi giờ tại trạm ATR 301 dựa trên thời gian và điều kiện thời tiết.</p>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <form id="form" class="panel">
+        <div class="section-title"><div><h2>Thông tin dự đoán</h2><p>Nhập điều kiện tại thời điểm cần ước lượng.</p></div></div>
+        <div class="grid">
+          <label><span>Thời điểm</span><input name="date_time" type="datetime-local" value="2018-09-20T08:00" required></label>
+          <label><span>Nhiệt độ (°C)</span><input name="temp_c" type="number" step="0.1" value="18" required></label>
+          <label><span>Lượng mưa 1 giờ (mm)</span><input name="rain_1h" type="number" step="0.1" min="0" value="0"></label>
+          <label><span>Lượng tuyết 1 giờ (mm)</span><input name="snow_1h" type="number" step="0.1" min="0" value="0"></label>
+          <label><span>Mây che phủ (%)</span><input name="clouds_all" type="number" min="0" max="100" value="40" required></label>
+          <label><span>Điều kiện thời tiết</span><select name="weather_main">{% for x in weather_values %}<option>{{x}}</option>{% endfor %}</select></label>
+        </div>
+        <label class="check"><input name="is_holiday" type="checkbox"><span><b>Ngày lễ</b><small>Áp dụng lịch nghỉ lễ trong dữ liệu</small></span></label>
+        <button type="submit"><span>Dự đoán lưu lượng</span></button>
+      </form>
+
+      <aside id="result" class="result" hidden>
+        <small>KẾT QUẢ DỰ ĐOÁN</small>
+        <strong id="number"></strong>
+        <span>phương tiện / giờ</span>
+        <div class="result-note">Kết quả được tạo trực tiếp bởi mô hình đã huấn luyện.</div>
+      </aside>
+    </section>
+    <p id="error"></p>
+    <footer>Dữ liệu I-94 westbound · Trạm ATR 301 · Minnesota, Hoa Kỳ<br><small>Mô hình minh họa học thuật, không sử dụng để điều hành giao thông thời gian thực.</small></footer>
+  </main>
+  <script src="{{ url_for('static',filename='js/app.js') }}"></script>
+</body>
+</html>

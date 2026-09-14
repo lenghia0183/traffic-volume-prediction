@@ -1,0 +1,62 @@
+column,value,count
+holiday,<MISSING>,48143
+holiday,Labor Day,7
+holiday,Thanksgiving Day,6
+holiday,Christmas Day,6
+holiday,New Years Day,6
+holiday,Martin Luther King Jr Day,6
+holiday,Columbus Day,5
+holiday,Veterans Day,5
+holiday,Washingtons Birthday,5
+holiday,Memorial Day,5
+holiday,Independence Day,5
+holiday,State Fair,5
+weather_main,Clouds,15164
+weather_main,Clear,13391
+weather_main,Mist,5950
+weather_main,Rain,5672
+weather_main,Snow,2876
+weather_main,Drizzle,1821
+weather_main,Haze,1360
+weather_main,Thunderstorm,1034
+weather_main,Fog,912
+weather_main,Smoke,20
+weather_main,Squall,4
+weather_description,sky is clear,11665
+weather_description,mist,5950
+weather_description,overcast clouds,5081
+weather_description,broken clouds,4666
+weather_description,scattered clouds,3461
+weather_description,light rain,3372
+weather_description,few clouds,1956
+weather_description,light snow,1946
+weather_description,Sky is Clear,1726
+weather_description,moderate rain,1664
+weather_description,haze,1360
+weather_description,light intensity drizzle,1100
+weather_description,fog,912
+weather_description,proximity thunderstorm,673
+weather_description,drizzle,651
+weather_description,heavy snow,616
+weather_description,heavy intensity rain,467
+weather_description,snow,293
+weather_description,proximity shower rain,136
+weather_description,thunderstorm,125
+weather_description,heavy intensity drizzle,64
+weather_description,thunderstorm with heavy rain,63
+weather_description,thunderstorm with light rain,54
+weather_description,proximity thunderstorm with rain,52
+weather_description,thunderstorm with rain,37
+weather_description,smoke,20
+weather_description,very heavy rain,18
+weather_description,thunderstorm with light drizzle,15
+weather_description,light intensity shower rain,13
+weather_description,proximity thunderstorm with drizzle,13
+weather_description,light shower snow,11
+weather_description,light rain and snow,6
+weather_description,shower drizzle,6
+weather_description,SQUALLS,4
+weather_description,sleet,3
+weather_description,freezing rain,2
+weather_description,thunderstorm with drizzle,2
+weather_description,shower snow,1

@@ -1,0 +1,37 @@
+{
+  "health": [
+    200,
+    {
+      "model_exists": true,
+      "status": "ok"
+    }
+  ],
+  "model_info": [
+    200,
+    {
+      "algorithm": "RandomForestRegressor",
+      "date_range": [
+        "2012-10-02T09:00:00",
+        "2018-09-30T23:00:00"
+      ],
+      "metrics": {
+        "mae": 241.86982925896967,
+        "r2": 0.9575584909544992,
+        "rmse": 405.8596011387722
+      }
+    }
+  ],
+  "predict": [
+    200,
+    {
+      "prediction": 5974,
+      "unit": "vehicles/hour"
+    }
+  ],
+  "validation": [
+    400,
+    {
+      "error": "Thiếu trường: date_time, temp_c, clouds_all, weather_main"
+    }
+  ]
+}
