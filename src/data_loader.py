@@ -8,8 +8,9 @@ def load_dataset() -> tuple[pd.DataFrame, Path]:
     ensure_dirs()
     candidates = list(RAW_DIR.glob("*.csv"))
     for path in candidates:
-        df = pd.read_csv(path)
+        df = pd.read_csv(path, keep_default_na=False, na_values=["", "NA", "NaN", "nan"])
         if set(EXPECTED).issubset(df.columns):
+            df["holiday"] = df["holiday"].fillna("None")
             return df[EXPECTED].copy(), path
     try:
         from ucimlrepo import fetch_ucirepo
@@ -20,6 +21,7 @@ def load_dataset() -> tuple[pd.DataFrame, Path]:
             raise ValueError(f"UCI response missing columns: {set(EXPECTED)-set(df.columns)}")
         path = RAW_DIR / "Metro_Interstate_Traffic_Volume.csv"
         df[EXPECTED].to_csv(path, index=False)
+        df["holiday"] = df["holiday"].fillna("None")
         return df[EXPECTED].copy(), path
     except Exception as first_error:
         import io, zipfile, requests
@@ -28,8 +30,8 @@ def load_dataset() -> tuple[pd.DataFrame, Path]:
         response.raise_for_status()
         with zipfile.ZipFile(io.BytesIO(response.content)) as archive:
             csv_name = next(n for n in archive.namelist() if n.lower().endswith(".csv"))
-            df = pd.read_csv(archive.open(csv_name))
+            df = pd.read_csv(archive.open(csv_name), keep_default_na=False, na_values=["", "NA", "NaN", "nan"])
         path = RAW_DIR / "Metro_Interstate_Traffic_Volume.csv"
         df[EXPECTED].to_csv(path, index=False)
+        df["holiday"] = df["holiday"].fillna("None")
         return df[EXPECTED].copy(), path
-

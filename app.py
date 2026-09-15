@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, render_template, request
-from src.predict import predict
+from src.predict import predict, validate_payload
 from src.config import ARTIFACT_DIR
 import json
 
@@ -15,6 +15,7 @@ def api_predict():
         required=["date_time","temp_c","clouds_all","weather_main"]
         missing=[x for x in required if x not in payload]
         if missing: return jsonify({"error":"Thiếu trường: "+", ".join(missing)}),400
+        validate_payload(payload)
         return jsonify({"prediction":predict(payload),"unit":"vehicles/hour"})
     except Exception as exc: return jsonify({"error":str(exc)}),400
 @app.get("/api/model-info")
@@ -24,4 +25,3 @@ def model_info():
 @app.get("/health")
 def health(): return jsonify({"status":"ok","model_exists":(ARTIFACT_DIR/"traffic_rf_pipeline.joblib").exists()})
 if __name__=="__main__": app.run(host="127.0.0.1",port=5000,debug=False)
-

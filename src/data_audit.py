@@ -5,6 +5,7 @@ from .config import TABLE_DIR
 
 def audit_dataset(df: pd.DataFrame) -> dict:
     data = df.copy()
+    data["holiday"] = data["holiday"].fillna("None")
     data["date_time"] = pd.to_datetime(data["date_time"], errors="coerce")
     data.head(10).to_csv(TABLE_DIR / "dataset_head.csv", index=False)
     pd.DataFrame({"column": data.columns, "dtype": data.dtypes.astype(str)}).to_csv(TABLE_DIR / "data_types.csv", index=False)

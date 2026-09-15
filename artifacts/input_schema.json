@@ -11,6 +11,8 @@
       "hour",
       "is_weekend",
       "is_holiday",
+      "is_rush_hour",
+      "day_of_year",
       "hour_sin",
       "hour_cos",
       "dow_sin",
@@ -33,6 +35,8 @@
       "hour",
       "is_weekend",
       "is_holiday",
+      "is_rush_hour",
+      "day_of_year",
       "hour_sin",
       "hour_cos",
       "dow_sin",
@@ -40,5 +44,27 @@
       "month_sin",
       "month_cos"
     ]
+  },
+  "constraints": {
+    "temp_c": {
+      "min": -50.0,
+      "max": 50.0
+    },
+    "rain_1h": {
+      "min": 0.0,
+      "max": 55.63
+    },
+    "snow_1h": {
+      "min": 0.0,
+      "max": 0.51
+    },
+    "clouds_all": {
+      "min": 0.0,
+      "max": 100.0
+    }
+  },
+  "date_range": {
+    "min": "2012-10-02 09:00:00",
+    "max": "2018-09-30 23:00:00"
   }
 }

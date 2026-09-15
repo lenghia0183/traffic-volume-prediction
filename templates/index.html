@@ -27,7 +27,7 @@
         <div class="grid">
           <label><span>Thời điểm</span><input name="date_time" type="datetime-local" value="2018-09-20T08:00" required></label>
           <label><span>Nhiệt độ (°C)</span><input name="temp_c" type="number" step="0.1" value="18" required></label>
-          <label><span>Lượng mưa 1 giờ (mm)</span><input name="rain_1h" type="number" step="0.1" min="0" value="0"></label>
+          <label><span>Lượng mưa 1 giờ (mm)</span><input name="rain_1h" type="number" step="0.1" min="0" max="55.63" value="0"><small>Phạm vi dữ liệu hợp lệ: 0–55,63 mm/giờ</small></label>
           <label><span>Lượng tuyết 1 giờ (mm)</span><input name="snow_1h" type="number" step="0.1" min="0" value="0"></label>
           <label><span>Mây che phủ (%)</span><input name="clouds_all" type="number" min="0" max="100" value="40" required></label>
           <label><span>Điều kiện thời tiết</span><select name="weather_main">{% for x in weather_values %}<option>{{x}}</option>{% endfor %}</select></label>

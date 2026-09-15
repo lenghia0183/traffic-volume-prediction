@@ -30,9 +30,9 @@ def add_toc(doc):
     entries=[("DANH MỤC HÌNH ẢNH VÀ BẢNG BIỂU",3,0),("LỜI NÓI ĐẦU",4,0),
       ("CHƯƠNG 1. TỔNG QUAN VỀ ĐỀ TÀI",5,0),("1.1. Tổng quan về phân tích dữ liệu",5,1),("1.2. Tổng quan về bài toán dự đoán",5,1),("1.3. Mục tiêu và phạm vi nghiên cứu",5,1),("1.5. Kết luận chương 1",6,1),
       ("CHƯƠNG 2. CÁC PHƯƠNG PHÁP KỸ THUẬT",7,0),("2.1. Phân tích mô tả và tiền xử lý",7,1),("2.2. Feature Engineering",7,1),("2.3. Random Forest Regression",7,1),("2.4. Đánh giá và tối ưu",7,1),("2.6. Kết luận chương 2",8,1),
-      ("CHƯƠNG 3. THỰC NGHIỆM VÀ ĐÁNH GIÁ",9,0),("3.1. Dữ liệu thực nghiệm",9,1),("3.2. Quy trình thực nghiệm",9,1),("3.2.2. Audit và tiền xử lý dữ liệu",9,2),("3.2.3. Phân tích mô tả",10,2),("3.2.4. Xây dựng mô hình Random Forest Regression",14,2),("3.3. Đánh giá và thảo luận",22,1),("3.4. Kết luận chương 3",22,1),
-      ("CHƯƠNG 4. XÂY DỰNG SẢN PHẨM DEMO",23,0),("4.1. Giới thiệu Flask",23,1),("4.2. Chuẩn bị tài nguyên",23,1),("4.3. Kiến trúc hệ thống",23,1),("4.4. Ưu điểm và hạn chế",24,1),("4.5. Kết luận chương 4",24,1),
-      ("KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN",25,0),("TÀI LIỆU THAM KHẢO",25,0)]
+      ("CHƯƠNG 3. THỰC NGHIỆM VÀ ĐÁNH GIÁ",9,0),("3.1. Dữ liệu thực nghiệm",9,1),("3.2. Quy trình thực nghiệm",9,1),("3.2.2. Audit và tiền xử lý dữ liệu",9,2),("3.2.3. Phân tích mô tả",10,2),("3.2.4. Xây dựng mô hình Random Forest Regression",14,2),("3.3. Đánh giá và thảo luận",23,1),("3.4. Kết luận chương 3",23,1),
+      ("CHƯƠNG 4. XÂY DỰNG SẢN PHẨM DEMO",24,0),("4.1. Giới thiệu Flask",24,1),("4.2. Chuẩn bị tài nguyên",24,1),("4.3. Kiến trúc hệ thống",24,1),("4.4. Ưu điểm và hạn chế",25,1),("4.5. Kết luận chương 4",25,1),
+      ("KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN",26,0),("TÀI LIỆU THAM KHẢO",26,0)]
     for title,page,level in entries:
         p=doc.add_paragraph(); p.paragraph_format.left_indent=Cm(level*.55); p.paragraph_format.space_after=Pt(1); p.paragraph_format.line_spacing=1.0
         tabs=p.paragraph_format.tab_stops; tabs.add_tab_stop(Cm(15.2))
@@ -50,7 +50,7 @@ def heading(doc,text,level=1):
     r=p.add_run(text); font(r,16 if level==1 else 14 if level==2 else 13,True,color="000000"); return p
 
 def table(doc,caption,headers,rows,widths=None):
-    cp=doc.add_paragraph(); cp.alignment=WD_ALIGN_PARAGRAPH.CENTER; font(cp.add_run(caption),12,True)
+    cp=doc.add_paragraph(); cp.alignment=WD_ALIGN_PARAGRAPH.CENTER; cp.paragraph_format.keep_with_next=True; font(cp.add_run(caption),12,True)
     t=doc.add_table(rows=1,cols=len(headers)); t.alignment=WD_TABLE_ALIGNMENT.CENTER; t.autofit=False; t.style="Table Grid"
     total=9360; widths=widths or [total//len(headers)]*len(headers); widths[-1]+=total-sum(widths)
     for i,h in enumerate(headers):
@@ -110,6 +110,7 @@ def generate_report():
       "year":"Năm của thời điểm quan sát", "month":"Tháng của thời điểm quan sát (1-12)",
       "day_of_week":"Thứ trong tuần, từ 0 (Thứ Hai) đến 6 (Chủ nhật)", "hour":"Giờ trong ngày, từ 0 đến 23",
       "is_weekend":"Cờ cuối tuần: 1 nếu Thứ Bảy/Chủ nhật, ngược lại là 0", "is_holiday":"Cờ ngày lễ: 1 nếu thuộc ngày lễ, ngược lại là 0",
+      "is_rush_hour":"Cờ giờ cao điểm: 1 nếu thuộc 6–9 giờ hoặc 15–18 giờ, ngược lại là 0", "day_of_year":"Thứ tự ngày trong năm, từ 1 đến 366",
       "hour_sin":"Thành phần sin mã hóa chu kỳ 24 giờ", "hour_cos":"Thành phần cos mã hóa chu kỳ 24 giờ",
       "dow_sin":"Thành phần sin mã hóa chu kỳ 7 ngày", "dow_cos":"Thành phần cos mã hóa chu kỳ 7 ngày",
       "month_sin":"Thành phần sin mã hóa chu kỳ 12 tháng", "month_cos":"Thành phần cos mã hóa chu kỳ 12 tháng",
@@ -141,7 +142,7 @@ def generate_report():
     heading(doc,"2.1. Phân tích mô tả và tiền xử lý",2)
     para(doc,"Các thống kê trung tâm, phân tán, tần suất danh mục và đồ thị theo thời gian được sử dụng để kiểm tra phân phối. Timestamp trùng được xem xét theo nhóm: nếu cùng thời điểm có nhiều mô tả thời tiết nhưng traffic_volume nhất quán, các dòng được tổng hợp thành một quan sát giao thông. Nhiệt độ 0 Kelvin được ghi nhận là bất thường vật lý và chỉ được nội suy sau khi đã thống kê.")
     heading(doc,"2.2. Feature Engineering",2)
-    para(doc,"Từ date_time, chương trình tạo year, month, day_of_week, hour, is_weekend và is_holiday. Các biến chu kỳ hour, day-of-week và month được mã hóa bằng cặp sin/cos để duy trì khoảng cách vòng tròn, ví dụ 23 giờ gần 0 giờ. weather_main được one-hot encoding; weather_description được loại khỏi mô hình chính để giảm độ phân mảnh danh mục và tránh thông tin mô tả dư thừa.")
+    para(doc,"Từ date_time, chương trình tạo year, month, day_of_week, day_of_year, hour, is_weekend, is_holiday và is_rush_hour. Các biến chu kỳ hour, day-of-week và month được mã hóa bằng cặp sin/cos để duy trì khoảng cách vòng tròn, ví dụ 23 giờ gần 0 giờ. weather_main được one-hot encoding; weather_description được loại khỏi mô hình chính để giảm độ phân mảnh danh mục và tránh thông tin mô tả dư thừa.")
     heading(doc,"2.3. Random Forest Regression",2)
     para(doc,"Random Forest Regressor kết hợp nhiều cây quyết định được huấn luyện trên các mẫu và tập đặc trưng ngẫu nhiên. Dự đoán cuối là trung bình của các cây, nhờ đó giảm phương sai so với một cây đơn. Mô hình phù hợp với quan hệ phi tuyến và tương tác giữa giờ, ngày trong tuần, thời tiết và lưu lượng mà không đòi hỏi giả định tuyến tính mạnh.")
     heading(doc,"2.4. Đánh giá và tối ưu",2)
@@ -162,7 +163,7 @@ def generate_report():
     heading(doc,"3.2.2. Audit và tiền xử lý dữ liệu",3)
     quality_rows=[["Giá trị thiếu",sum(d['missing'].values())],["Dòng trùng hoàn toàn",fmt(d['exact_duplicates'])],["Nhóm timestamp trùng",fmt(d['duplicate_timestamp_groups'])],["Dòng dư do timestamp trùng",fmt(d['duplicate_timestamp_extra_rows'])],["Nhóm có traffic_volume không nhất quán",fmt(d['inconsistent_traffic_timestamp_groups'])],["Nhiệt độ < 200 K",fmt(d['temp_below_200'])],["Nhiệt độ = 0 K",fmt(d['temp_equal_zero'])],["Khoảng trống > 1 giờ",fmt(d['time_gaps_over_1h'])],["Khoảng trống lớn nhất (giờ)",fmt(d['max_gap_hours'],1)]]
     table(doc,"Bảng 3.3. Kết quả kiểm tra chất lượng dữ liệu",["Chỉ tiêu","Kết quả"],quality_rows,[6200,3160])
-    para(doc,f"Audit phát hiện {fmt(d['duplicate_timestamp_groups'])} nhóm timestamp lặp. Sau khi loại {fmt(d['exact_duplicates'])} dòng trùng hoàn toàn, hàm aggregate_duplicate_timestamps tổng hợp các mô tả thời tiết cùng giờ bằng median/max/mode theo ý nghĩa biến. Có {fmt(d['temp_equal_zero'])} giá trị 0 K; các giá trị này được thay bằng nội suy theo thời gian sau khi audit, thay vì xóa tự động. Tập cuối có {fmt(q['rows_after_timestamp_aggregation'])} dòng.")
+    para(doc,f"Audit phát hiện {fmt(d['duplicate_timestamp_groups'])} nhóm timestamp lặp. Sau khi loại {fmt(d['exact_duplicates'])} dòng trùng hoàn toàn, hàm aggregate_duplicate_timestamps tổng hợp các mô tả thời tiết cùng giờ bằng median/max/mode theo ý nghĩa biến. Có {fmt(d['temp_equal_zero'])} giá trị 0 K; các giá trị này được thay bằng nội suy theo thời gian sau khi audit. Ngoài ra, một giá trị rain_1h bằng 9.831,3 mm/giờ được xác định là lỗi cảm biến/nhập liệu vì vượt xa ngưỡng audit 100 mm/giờ; chương trình thay đúng {fmt(q['invalid_rain_replaced'])} điểm bất thường bằng nội suy thời gian và giữ lại các mức mưa cực đoan hợp lý. Tập cuối có {fmt(q['rows_after_timestamp_aggregation'])} dòng.")
     heading(doc,"3.2.3. Phân tích mô tả",3)
     figure(doc,FIGURE_DIR/"01_traffic_distribution.png","Hình 3.1. Phân phối lưu lượng giao thông")
     para(doc,f"Lưu lượng trung bình là {fmt(eda['mean_traffic'],1)} phương tiện/giờ và trung vị là {fmt(eda['median_traffic'],1)}. Hình 3.1 cho thấy phân phối rộng, phản ánh sự khác biệt lớn giữa giờ thấp điểm và cao điểm.")
@@ -200,7 +201,8 @@ def generate_report():
     tune=data['tuning']; parameter_meanings={"model__n_estimators":"Số cây quyết định trong rừng","model__max_depth":"Độ sâu tối đa của mỗi cây","model__min_samples_split":"Số mẫu tối thiểu để tách một nút","model__min_samples_leaf":"Số mẫu tối thiểu tại một nút lá","model__max_features":"Số/tỷ lệ đặc trưng được xét tại mỗi lần tách"}
     table(doc,"Bảng 3.7. Không gian tìm kiếm siêu tham số",["Tham số","Ý nghĩa","Giá trị thử nghiệm"],[[k.replace("model__",""),parameter_meanings.get(k,"Tham số của mô hình"),", ".join(map(str,v))] for k,v in tune['search_space'].items()],[2700,4160,2500])
     para(doc,f"RandomizedSearchCV thử {tune['candidates']} cấu hình với {tune['cv']}. Best CV MAE là {fmt(tune['best_cv_mae'],2)} phương tiện/giờ. Bộ tham số tốt nhất: "+", ".join(f"{k}={v}" for k,v in tune['best_parameters'].items())+".")
-    heading(doc,"3.2.4.5. Đánh giá mô hình cuối",3)
+    final_heading=heading(doc,"3.2.4.5. Đánh giá mô hình cuối",3)
+    final_heading.paragraph_format.page_break_before=True
     table(doc,"Bảng 3.8. Chỉ số mô hình Random Forest đã tối ưu",["Tập dữ liệu","MAE (xe/giờ)","RMSE (xe/giờ)","R²"],[["Huấn luyện (train)",fmt(final['train']['mae'],2),fmt(final['train']['rmse'],2),fmt(final['train']['r2'],4)],["Kiểm tra (test)",fmt(final['test']['mae'],2),fmt(final['test']['rmse'],2),fmt(final['test']['r2'],4)]],[2600,2360,2360,2040])
     para(doc,f"Trên tập test, MAE = {fmt(final['test']['mae'],2)} nghĩa là dự đoán lệch tuyệt đối trung bình khoảng {fmt(final['test']['mae'],0)} phương tiện/giờ. RMSE = {fmt(final['test']['rmse'],2)} lớn hơn MAE, cho thấy vẫn có một số lỗi lớn. R² = {fmt(final['test']['r2'],4)} cho biết mô hình giải thích khoảng {fmt(final['test']['r2']*100,2)}% biến thiên lưu lượng trên giai đoạn kiểm tra.")
     para(doc,f"MAE train là {fmt(final['train']['mae'],2)}, thấp hơn MAE test. Khoảng cách này cho thấy một mức overfitting nhất định; tuy nhiên cần đánh giá cùng hiệu năng test thay vì chỉ dựa vào độ khớp train.")
@@ -270,7 +272,7 @@ def generate_report():
           "[4] Scikit-learn Developers, TimeSeriesSplit documentation. https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.TimeSeriesSplit.html",
           "[5] Pallets Projects, Flask Quickstart. https://flask.palletsprojects.com/en/stable/quickstart/"]
     for x in refs: para(doc,x,first=False)
-    out=REPORT_DIR/"final_report.docx"; doc.save(out)
+    out=REPORT_DIR/"final_report_updated.docx"; doc.save(out)
     # Machine-check that the key experiment numbers were inserted from report_data.json.
     text="\n".join(p.text for p in doc.paragraphs)
     expected=[fmt(d['raw_rows']),fmt(d['processed_rows']),fmt(final['test']['mae'],2),fmt(final['test']['rmse'],2),fmt(final['test']['r2'],4)]

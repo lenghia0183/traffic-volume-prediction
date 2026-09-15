@@ -33,16 +33,16 @@ def main():
     report={"dataset":{**audit,"source_file":str(path),"processed_rows":int(len(clean))},"quality":{**clean_stats},
       "split":{"train_rows":len(Xtr),"test_rows":len(Xte),"train_start":str(clean.date_time.iloc[0]),"train_end":str(clean.date_time.iloc[len(Xtr)-1]),"test_start":str(clean.date_time.iloc[len(Xtr)]),"test_end":str(clean.date_time.iloc[-1])},
       "features":{"numeric":numeric,"categorical":categorical,"all":list(X.columns)},"models":{"comparison":comparison},
-      "tuning":{"search_space":space,"best_parameters":clean_params(search.best_params_),"best_cv_mae":float(-search.best_score_),"cv":"TimeSeriesSplit(n_splits=3)","candidates":10},
+      "tuning":{"search_space":space,"best_parameters":clean_params(search.best_params_),"best_cv_mae":float(-search.best_score_),"cv":"TimeSeriesSplit(n_splits=5)","candidates":24},
       "final_model":{"train":train_metrics,"test":test_metrics,"model_path":"artifacts/traffic_rf_pipeline.joblib","reload_prediction":sample_prediction},
       "feature_importance":fi,"permutation_importance":perm,"error_analysis":error,"eda":eda,
       "environment":{"python":platform.python_version(),"pandas":pd.__version__,"scikit_learn":sklearn.__version__,"platform":platform.platform()},
       "figures":sorted(str(p.relative_to(Path.cwd())) for p in FIGURE_DIR.glob("*.png")),"tables":sorted(str(p.relative_to(Path.cwd())) for p in TABLE_DIR.glob("*"))}
-    for name,obj in [("metrics.json",report["final_model"]),("best_params.json",report["tuning"]),("experiment_results.json",report["models"]),("input_schema.json",{"features":report["features"]}),("category_values.json",{"weather_main":sorted(clean.weather_main.unique().tolist())})]:
+    schema={"features":report["features"],"constraints":{"temp_c":{"min":-50.0,"max":50.0},"rain_1h":{"min":0.0,"max":float(clean.rain_1h.max())},"snow_1h":{"min":0.0,"max":float(clean.snow_1h.max())},"clouds_all":{"min":0.0,"max":100.0}},"date_range":{"min":str(clean.date_time.min()),"max":str(clean.date_time.max())}}
+    for name,obj in [("metrics.json",report["final_model"]),("best_params.json",report["tuning"]),("experiment_results.json",report["models"]),("input_schema.json",schema),("category_values.json",{"weather_main":sorted(clean.weather_main.unique().tolist())})]:
         (ARTIFACT_DIR/name).write_text(json.dumps(obj,ensure_ascii=False,indent=2,default=str),encoding="utf-8")
     (ARTIFACT_DIR/"report_data.json").write_text(json.dumps(report,ensure_ascii=False,indent=2,default=str),encoding="utf-8")
     print(json.dumps({"raw_rows":len(raw),"processed_rows":len(clean),"test_metrics":test_metrics,"best_params":clean_params(search.best_params_)},ensure_ascii=False,indent=2))
     return report
 
 if __name__=="__main__": main()
-

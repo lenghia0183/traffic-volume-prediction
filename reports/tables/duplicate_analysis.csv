@@ -4,7 +4,7 @@ columns,9
 column_names,"[""holiday"", ""temp"", ""rain_1h"", ""snow_1h"", ""clouds_all"", ""weather_main"", ""weather_description"", ""date_time"", ""traffic_volume""]"
 date_start,2012-10-02T09:00:00
 date_end,2018-09-30T23:00:00
-missing,"{""holiday"": 48143, ""temp"": 0, ""rain_1h"": 0, ""snow_1h"": 0, ""clouds_all"": 0, ""weather_main"": 0, ""weather_description"": 0, ""date_time"": 0, ""traffic_volume"": 0}"
+missing,"{""holiday"": 0, ""temp"": 0, ""rain_1h"": 0, ""snow_1h"": 0, ""clouds_all"": 0, ""weather_main"": 0, ""weather_description"": 0, ""date_time"": 0, ""traffic_volume"": 0}"
 exact_duplicates,17
 unique_timestamps,40575
 duplicate_timestamp_groups,5445
@@ -18,4 +18,4 @@ temp_mean,281.2058703012198
 temp_median,282.45
 temp_below_200,10
 temp_equal_zero,10
-holiday_values,"[""Christmas Day"", ""Columbus Day"", ""Independence Day"", ""Labor Day"", ""Martin Luther King Jr Day"", ""Memorial Day"", ""New Years Day"", ""State Fair"", ""Thanksgiving Day"", ""Veterans Day"", ""Washingtons Birthday""]"
+holiday_values,"[""Christmas Day"", ""Columbus Day"", ""Independence Day"", ""Labor Day"", ""Martin Luther King Jr Day"", ""Memorial Day"", ""New Years Day"", ""None"", ""State Fair"", ""Thanksgiving Day"", ""Veterans Day"", ""Washingtons Birthday""]"

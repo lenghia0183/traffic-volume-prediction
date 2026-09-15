@@ -2,6 +2,6 @@
 
 Báo cáo Word được sinh từ `artifacts/report_data.json`.
 
-- MAE test: 241.869829
-- RMSE test: 405.859601
-- R2 test: 0.957558
+- MAE test: 219.951018
+- RMSE test: 373.006760
+- R2 test: 0.964151

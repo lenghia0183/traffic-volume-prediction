@@ -26,7 +26,12 @@ def aggregate_duplicate_timestamps(df: pd.DataFrame) -> tuple[pd.DataFrame, dict
     zero_count=int((out.temp==0).sum())
     out.loc[out.temp==0,"temp"]=np.nan
     out["temp"]=out.temp.interpolate(limit_direction="both")
+    # The source contains one impossible sensor/data-entry value (9831.3 mm/h).
+    # Preserve credible extreme rain and replace only values above 100 mm/h.
+    invalid_rain=int((out.rain_1h>100).sum())
+    out.loc[out.rain_1h>100,"rain_1h"]=np.nan
+    out["rain_1h"]=out.rain_1h.interpolate(method="linear",limit_direction="both").clip(lower=0)
     stats={"rows_after_exact_dedup":int(len(x)),"rows_after_timestamp_aggregation":int(len(out)),
-           "inconsistent_groups_seen":inconsistent,"zero_temp_replaced":zero_count}
+           "inconsistent_groups_seen":inconsistent,"zero_temp_replaced":zero_count,
+           "invalid_rain_replaced":invalid_rain,"rain_validity_threshold_mm":100.0}
     return out, stats
-
